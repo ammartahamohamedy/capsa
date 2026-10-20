@@ -18,6 +18,10 @@ OCI Runtime Specification v1.3.0.
 
 ## Input and responsibility boundaries
 
+See [Configuration mechanics](configuration.md) for the schema/model/document
+distinction, configuration flow diagram, loading and validation responsibilities,
+and the generated-bundle serialization boundary.
+
 The runtime consumes an OCI bundle with `config.json` at its root and a prepared
 filesystem identified by `root.path`. On Linux, that directory must exist; its
 path may be absolute or relative to the bundle. An empty mountpoint alone does
@@ -96,6 +100,9 @@ input boundary.
 > before defining the generation parser. No fixed number of inputs is implied.
 > Generation inputs belong to bundle preparation; supplied bundles retain
 > their own authoritative configuration.
+
+The [generated-bundle workflow](configuration.md#generated-bundles) explains
+how those inputs become Rust values and the required `config.json` artifact.
 
 ## Public operations
 
@@ -276,6 +283,10 @@ before their removal is implemented; this contract does not promise that such
 layers survive `remove`.
 
 ## Validation and errors
+
+The detailed [configuration validation responsibilities](configuration.md#loading-and-validation-responsibilities)
+apply to both input paths; parsing into Rust values alone does not establish
+that an input can be applied by the runtime.
 
 Both generated and user-supplied bundles go through the same input validation:
 
